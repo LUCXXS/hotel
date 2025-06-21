@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Empleados</title>
+  <link rel="icon" type="image/png" href="hotel.jpg">
+  <link rel="stylesheet" href="css/tablas.css"> <!-- CSS compartido -->
+</head>
+<body>
+  <!-- Menú de navegación -->
+  <nav class="menu">
+    <ul>
+      <li><a href="Principal.html">Menú principal</a></li>
+      <li><a href="habitaciones.html">Habitaciones</a></li>
+      <li><a href="reservas.html">Reservas</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+      <li><a href="index.html">Cerrar sesión</a></li>
+    </ul>
+  </nav>
+
+  <!-- Título de la sección -->
+  <h2>Lista de Empleados</h2>
+
+  <!-- Formulario para agregar empleados -->
+  <div class="form-container">
+    <h3>Agregar Empleado</h3>
+    <form id="formEmpleado">
+      <!-- Campo: Nombre del empleado -->
+      <input type="text" id="nombre" placeholder="Nombre completo" required>
+
+      <!-- Campo: Puesto del empleado -->
+      <input type="text" id="puesto" placeholder="Puesto (Ej. Recepcionista)" required>
+
+      <!-- Campo: Teléfono del empleado -->
+      <input type="text" id="telefono" placeholder="Teléfono" required>
+
+      <!-- Botón de enviar -->
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+
+  <!-- Tabla para mostrar la lista de empleados -->
+  <div class="tabla-container">
+    <table id="tablaEmpleados">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Puesto</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Filas de empleados se insertarán aquí dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Función para cargar la lista de empleados desde el backend
+    async function cargarEmpleados() {
+      const res = await fetch('/api/empleados'); // Obtener empleados del servidor
+      const empleados = await res.json();        // Convertir respuesta a JSON
+      const tbody = document.querySelector('#tablaEmpleados tbody');
+
+      // Llenar la tabla con cada empleado
+      tbody.innerHTML = empleados.map(emp => `
+        <tr>
+          <td>${emp.nombre}</td>
+          <td>${emp.puesto}</td>
+          <td>${emp.telefono}</td>
+          <td>
+            <button class="btn-eliminar" onclick="eliminarEmpleado('${emp._id}')">Eliminar</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Función para eliminar un empleado con confirmación
+    async function eliminarEmpleado(id) {
+      const confirmar = confirm("¿Deseas eliminar este empleado?");
+      if (!confirmar) return;
+      await fetch(`/api/empleados/${id}`, { method: 'DELETE' });
+      cargarEmpleados(); // Recargar tabla
+    }
+
+    // Evento al enviar el formulario de empleados
+    document.getElementById('formEmpleado').addEventListener('submit', async (e) => {
+      e.preventDefault(); // Prevenir recarga de página
+
+      // Obtener datos del formulario
+      const nombre = document.getElementById('nombre').value.trim();
+      const puesto = document.getElementById('puesto').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+
+      // Enviar los datos al servidor (POST)
+      await fetch('/api/empleados', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, puesto, telefono }) // Nuevos nombres más claros
+      });
+
+      // Limpiar formulario y actualizar tabla
+      document.getElementById('formEmpleado').reset();
+      cargarEmpleados();
+    });
+
+    // Cargar empleados al iniciar la página
+    cargarEmpleados();
+    window.eliminarEmpleado = eliminarEmpleado; // Hacer accesible la función desde el HTML
+  </script>
+</body>
+</html>

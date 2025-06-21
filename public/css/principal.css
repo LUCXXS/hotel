@@ -1,0 +1,90 @@
+/* 🎥 Fondo de video que cubre toda la pantalla */
+#bg-video {
+    position: fixed;         /* El video permanece fijo incluso al hacer scroll */
+    top: 0;
+    left: 0;
+    min-width: 100vw;        /* Asegura que cubra todo el ancho de la ventana */
+    min-height: 100vh;       /* Asegura que cubra toda la altura de la ventana */
+    object-fit: cover;       /* Asegura que el video llene el área sin deformarse */
+    z-index: -1;             /* Se envía detrás de todos los demás elementos */
+}
+
+/* 🎯 Contenedor central donde está el branding y el menú */
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+
+    /* ⬆️ Ajuste para subir el contenedor */
+    transform: translateY(-50px); /* Puedes ajustar el valor según lo que necesites */
+}
+
+/* 📛 Branding: imagen del hotel + texto */
+.branding {
+    text-align: center;
+    margin-bottom: 40px;        /* Espacio entre el branding y el menú */
+}
+
+.branding img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;         /* Hace la imagen completamente circular */
+    object-fit: cover;          /* Recorta sin deformar */
+    box-shadow: 0 0 20px rgba(0,0,0,0.4); /* Sombra sutil para destacar */
+}
+
+.branding p {
+    font-size: 30px;
+    font-weight: bold;
+    color: #D4AF37;             /* Color dorado */
+    margin-top: 15px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); /* Da profundidad al texto */
+}
+
+/* 🧱 Menú con estilo de tablero (grid) */
+.menu ul {
+    list-style: none;          /* Quita viñetas */
+    padding: 40px;             /* Espacio interior */
+    margin: 0 auto;
+    display: grid;             /* Usa CSS Grid para distribución */
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+    /* Celdas que se adaptan al tamaño disponible */
+    gap: 30px;                 /* Espacio entre los botones */
+    max-width: 600px;          /* Ancho máximo del contenedor */
+    background-color: rgb(44, 62, 80); /* Fondo oscuro translúcido */
+    border-radius: 25px;       /* Bordes redondeados */
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.3); /* Sombra alrededor */
+}
+
+/* 🎯 Cada celda del menú (li) se centra */
+.menu li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 🟨 Botones del menú */
+.menu a {
+    display: block;
+    background-color: #D4AF37;    /* Dorado */
+    color: #2C3E50;               /* Azul oscuro para contraste */
+    text-decoration: none;        /* Sin subrayado */
+    padding: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;          /* Bordes redondeados */
+    width: 100%;                  /* Ocupa todo el ancho de su celda */
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    transition: 0.3s ease all;    /* Animación de transición */
+}
+
+/* 🟨 Efecto hover de los botones */
+.menu a:hover {
+    background-color: #C19A2C;    /* Un tono más oscuro de dorado */
+    color: white;                 /* Texto blanco para contraste */
+}

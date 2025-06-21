@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Habitaciones</title>
+  <link rel="icon" type="image/png" href="hotel.jpg">
+  <link rel="stylesheet" href="css/tablas.css"> <!-- CSS compartido para estilos de tablas y menú -->
+</head>
+<body>
+  <!-- Menú de navegación con enlaces a secciones principales -->
+  <nav class="menu">
+    <ul>
+      <li><a href="Principal.html">Menú principal</a></li>
+      <li><a href="reservas.html">Reservas</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+      <li><a href="empleados.html">Empleados</a></li>
+      <li><a href="index.html">Cerrar sesión</a></li>
+    </ul>
+  </nav>
+
+  <h2>Lista de Habitaciones</h2>
+
+  <!-- Formulario para agregar nuevas habitaciones -->
+  <div class="form-container">
+    <h3>Agregar Habitación</h3>
+    <form id="formHabitacion">
+      <input type="text" id="numero" placeholder="Número" required> <!-- Número de habitación -->
+      <input type="text" id="tipo" placeholder="Tipo" required>     <!-- Tipo de habitación -->
+      <input type="number" id="precio" placeholder="Precio" required min="0"> <!-- Precio por noche -->
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+
+  <!-- Tabla para mostrar las habitaciones existentes -->
+  <div class="tabla-container">
+    <table id="tablaHabitaciones">
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Tipo</th>
+          <th>Precio</th>
+          <th>Acciones</th> <!-- Botón para eliminar habitación -->
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí se inyectan las filas dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Función para obtener habitaciones desde el servidor y mostrar en la tabla
+    async function cargarHabitaciones() {
+      const res = await fetch('/api/habitaciones'); // Solicita datos a la API
+      const habitaciones = await res.json();
+      const tbody = document.querySelector('#tablaHabitaciones tbody');
+      // Genera filas HTML por cada habitación y las inserta en tbody
+      tbody.innerHTML = habitaciones.map(h => `
+        <tr>
+          <td>${h.numero}</td>
+          <td>${h.tipo}</td>
+          <td>${h.precio}</td>
+          <td>
+            <!-- Botón para eliminar habitación, llama a eliminarHabitacion -->
+            <button class="btn-eliminar" onclick="eliminarHabitacion('${h._id}')">Eliminar</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Función para eliminar habitación por ID, confirmando antes
+    async function eliminarHabitacion(id) {
+      const confirmar = confirm("¿Estás seguro de eliminar la habitación?");
+      if (!confirmar) return; // Si no confirma, no hace nada
+      await fetch(`/api/habitaciones/${id}`, { method: 'DELETE' }); // Petición DELETE al servidor
+      cargarHabitaciones(); // Refresca la tabla
+    }
+
+    // Maneja el envío del formulario para agregar habitación
+    document.getElementById('formHabitacion').addEventListener('submit', async (e) => {
+      e.preventDefault(); // Evita recarga de página al enviar el formulario
+      // Obtiene valores del formulario
+      const numero = document.getElementById('numero').value;
+      const tipo = document.getElementById('tipo').value;
+      const precio = document.getElementById('precio').value;
+
+      // Envía POST con los datos de la nueva habitación
+      await fetch('/api/habitaciones', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ numero, tipo, precio })
+      });
+
+      document.getElementById('formHabitacion').reset(); // Limpia el formulario
+      cargarHabitaciones(); // Actualiza tabla con la nueva habitación
+    });
+
+    cargarHabitaciones(); // Carga inicial de datos al abrir la página
+    window.eliminarHabitacion = eliminarHabitacion; // Hace disponible la función para botón eliminar
+  </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Servicios</title>
+  <link rel="icon" type="image/png" href="hotel.jpg">
+  <link rel="stylesheet" href="css/tablas.css"> <!-- CSS compartido -->
+</head>
+<body>
+  <!-- Menú de navegación -->
+  <nav class="menu">
+    <ul>
+      <li><a href="Principal.html">Menú principal</a></li>
+      <li><a href="habitaciones.html">Habitaciones</a></li>
+      <li><a href="reservas.html">Reservas</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+      <li><a href="empleados.html">Empleados</a></li>
+      <li><a href="index.html">Cerrar sesión</a></li>
+    </ul>
+  </nav>
+
+  <!-- Título -->
+  <h2>Lista de Servicios</h2>
+
+  <!-- Formulario para agregar un servicio -->
+  <div class="form-container">
+    <h3>Agregar Servicio</h3>
+    <form id="formServicio">
+      <!-- Campo nombre del servicio -->
+      <input type="text" id="nombreS" placeholder="Nombre del servicio" required>
+
+      <!-- Campo número de habitación -->
+      <input type="number" id="habitacion" placeholder="Número de habitación" required>
+
+      <!-- Campo nuevo: costo del servicio -->
+      <input type="number" id="costo" placeholder="Costo ($)" required>
+
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+
+  <!-- Tabla para mostrar los servicios registrados -->
+  <div class="tabla-container">
+    <table id="tablaServicios">
+      <thead>
+        <tr>
+          <th>Nombre del Servicio</th>
+          <th>Habitación</th>
+          <th>Costo</th> <!-- Columna agregada para mostrar el costo -->
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Filas dinámicas se insertarán aquí -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Función para cargar servicios desde el backend
+    async function cargarServicios() {
+      const res = await fetch('/api/servicios'); // Petición GET a /api/servicios
+      const servicios = await res.json();        // Convertir respuesta a JSON
+      const tbody = document.querySelector('#tablaServicios tbody');
+
+      // Llenar la tabla con los servicios recibidos
+      tbody.innerHTML = servicios.map(s => `
+        <tr>
+          <td>${s.nombreS}</td>
+          <td>${s.habitacion}</td>
+          <td>$${s.costo}</td> <!-- Mostrar costo en la tabla -->
+          <td>
+            <button class="btn-eliminar" onclick="eliminarServicio('${s._id}')">Eliminar</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Función para eliminar un servicio con confirmación
+    async function eliminarServicio(id) {
+      const confirmar = confirm("¿Deseas eliminar este servicio?");
+      if (!confirmar) return;
+      await fetch(`/api/servicios/${id}`, { method: 'DELETE' });
+      cargarServicios(); // Recargar tabla actualizada
+    }
+
+    // Manejar envío del formulario para agregar servicio
+    document.getElementById('formServicio').addEventListener('submit', async (e) => {
+      e.preventDefault(); // Evita recargar la página
+
+      // Captura de datos desde los inputs
+      const nombreS = document.getElementById('nombreS').value.trim();
+      const habitacion = parseInt(document.getElementById('habitacion').value);
+      const costo = parseFloat(document.getElementById('costo').value); // Nuevo campo: costo
+
+      // Enviar datos al servidor por POST
+      await fetch('/api/servicios', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombreS, habitacion, costo }) // Incluir costo en el envío
+      });
+
+      // Resetear el formulario y recargar la tabla
+      document.getElementById('formServicio').reset();
+      cargarServicios();
+    });
+
+    // Ejecutar carga inicial de servicios al abrir la página
+    cargarServicios();
+    window.eliminarServicio = eliminarServicio; // Hacer función accesible desde HTML
+  </script>
+</body>
+</html>

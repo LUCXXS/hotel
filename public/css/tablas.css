@@ -1,0 +1,160 @@
+/* ===== Estilos básicos para el cuerpo ===== */
+body {
+  font-family: Arial, sans-serif;  /* Fuente sencilla y legible */
+  background-color: #f9f9f9;       /* Fondo muy claro */
+  margin: 0;
+  padding: 70px 20px 20px 20px;   /* Padding superior para nav fijo + espacio lateral */
+  color: #333;                    /* Texto oscuro */
+  box-sizing: border-box;         /* Incluir padding y border en ancho total */
+}
+
+/* ===== Estilo para el menú de navegación pegado a los bordes ===== */
+.menu {
+  background-color: #004080;      /* Azul fuerte */
+  padding: 0;                    /* Sin padding para que esté pegado */
+  margin: 0;                     /* Sin margen */
+  width: 100vw;                  /* Ocupa todo el ancho visible */
+  position: fixed;               /* Pegado a la parte superior */
+  top: 0;
+  left: 0;
+  z-index: 1000;                /* Para que esté siempre encima */
+  box-sizing: border-box;
+}
+
+.menu ul {
+  list-style: none;               /* Sin viñetas */
+  padding: 0;
+  margin: 0;
+  display: flex;                 /* Menú horizontal */
+  justify-content: center;       /* Centrar los elementos */
+  align-items: center;
+  height: 50px;                 /* Altura fija */
+}
+
+.menu ul li {
+  margin: 0 15px;                /* Separación entre enlaces */
+}
+
+.menu ul li a {
+  color: #D4AF37;               /* Dorado */
+  text-decoration: none;        /* Sin subrayado */
+  font-weight: bold;
+  padding: 10px 15px;
+  display: inline-block;
+}
+
+.menu ul li a:hover {
+  background-color: #D4AF37;    /* Fondo dorado al pasar mouse */
+  color: #004080;               /* Texto azul */
+  border-radius: 4px;
+}
+
+/* ===== Títulos ===== */
+h2 {
+  text-align: center;            /* Centrar título principal */
+  color: #2c3e50;               /* Azul oscuro */
+  margin-bottom: 20px;           /* Separación inferior */
+}
+
+h3 {
+  color: #34495e;               /* Azul grisáceo para subtítulo */
+  margin-bottom: 10px;
+}
+
+/* ===== Contenedor y formulario para agregar habitaciones ===== */
+.form-container {
+  max-width: 600px;              /* Ancho máximo aumentado para evitar overflow */
+  margin: 0 auto 40px auto;      /* Centrar y separación abajo */
+  background-color: white;       /* Fondo blanco */
+  padding: 20px;                 /* Espacio interno */
+  border-radius: 8px;            /* Bordes redondeados */
+  box-shadow: 0 0 5px #ccc;      /* Sombra ligera */
+  box-sizing: border-box;        /* Incluir padding y border en ancho */
+}
+
+/* ===== Formulario en bloque ===== */
+.form-container form {
+  display: block;
+}
+
+/* ===== Inputs que ocupan todo el ancho del contenedor sin salir ===== */
+.form-container input {
+  width: 100%;                  /* Ancho completo dentro del contenedor */
+  padding: 10px;                /* Espacio interno */
+  margin-bottom: 15px;          /* Separación abajo */
+  font-size: 1em;
+  border: 1px solid #ccc;       /* Borde gris claro */
+  border-radius: 4px;
+  box-sizing: border-box;       /* Evita que padding aumente ancho */
+  background-color: #fffbea;   /* Fondo muy tenue amarillo pálido */
+}
+
+/* ===== Botón para agregar ===== */
+.form-container button {
+  width: 100%;                  /* Botón ancho completo */
+  padding: 10px;
+  background-color: #004080;    /* Azul fuerte */
+  color: white;                 /* Texto blanco */
+  border: none;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* ===== Cambio de color del botón al pasar el mouse ===== */
+.form-container button:hover {
+  background-color: #003366;    /* Azul más oscuro */
+}
+
+/* ===== Contenedor y tabla de habitaciones ===== */
+.tabla-container {
+  max-width: 900px;             /* Ancho máximo */
+  margin: 0 auto;               /* Centrar */
+  background-color: white;      /* Fondo blanco */
+  padding: 15px;                /* Espacio interno */
+  border-radius: 8px;           /* Bordes redondeados */
+  box-shadow: 0 0 5px #ccc;    /* Sombra ligera */
+  overflow-x: auto;             /* Scroll horizontal si es necesario */
+  box-sizing: border-box;
+}
+
+/* ===== Tabla ocupa todo el ancho del contenedor ===== */
+table {
+  width: 100%;                 /* Ancho completo */
+  border-collapse: collapse;  /* Sin espacios entre celdas */
+}
+
+/* ===== Estilos del encabezado de la tabla ===== */
+thead {
+  background-color: #D4AF37;   /* Fondo dorado encabezado */
+  color: #004080;              /* Texto azul */
+}
+
+thead th {
+  padding: 12px;              /* Espacio interno */
+  text-align: left;           /* Texto alineado a la izquierda */
+  border-bottom: 2px solid #003366;  /* Línea azul más oscuro */
+}
+
+/* ===== Estilos de celdas del cuerpo de la tabla ===== */
+tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ddd; /* Línea gris clara */
+}
+
+/* ===== Botón eliminar ===== */
+.btn-eliminar {
+  background-color: #e74c3c;  /* Rojo */
+  color: white;               /* Texto blanco */
+  border: none;
+  padding: 8px 12px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+  background-color: #c0392b;  /* Rojo oscuro al pasar mouse */
+}

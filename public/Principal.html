@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"> <!-- Codificación de caracteres en UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configuración para responsive design -->
+    
+    <title>Bienvenido</title> <!-- Título que aparece en la pestaña del navegador -->
+
+    <!-- Icono del sitio web -->
+    <link rel="icon" type="image/png" href="hotel.jpg">
+
+    <!-- Enlace a la hoja de estilos externa -->
+    <link rel="stylesheet" href="css/principal.css">
+</head>
+
+<body>
+    <!-- Video de fondo que se reproduce automáticamente sin sonido y en bucle -->
+    <video autoplay muted loop id="bg-video">
+        <source src="hotelv.mp4" type="video/mp4">
+        <!-- Mensaje alternativo si el navegador no puede reproducir el video -->
+        Tu navegador no soporta videos HTML5.
+    </video> 
+
+    <!-- Contenedor principal de la interfaz -->
+    <div class="contenedor">
+
+        <!-- Sección de branding del hotel -->
+        <div class="branding"> <!--sección donde se muestra la identidad visual del hotel, es decir, el logo y el nombre  -->
+            <img src="hotel.jpg" alt="Logo del hotel" /> <!-- Logo -->
+            <p>Hotel ROOMFLOW</p> <!-- Nombre del hotel -->
+        </div>
+
+        <!-- Menú de navegación principal -->
+        <nav class="menu">
+            <ul>
+                <!-- Enlaces a las diferentes secciones del sistema -->
+                <li><a href="habitaciones.html">Habitaciones</a></li>
+                <li><a href="reservas.html">Reservas</a></li>
+                <li><a href="servicios.html">Servicios</a></li>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="empleados.html">Empleados</a></li>
+                <li><a href="index.html">Cerrar sesión</a></li> <!-- Redirige al login -->
+            </ul>
+        </nav>
+        
+    </div>
+</body>
+</html>

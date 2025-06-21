@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"> <!-- Codificación de caracteres en UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive Design -->
+  <title>Registro de Usuario</title> <!-- Título de la pestaña -->
+
+  <!-- Estilos CSS externos -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Icono del sitio (favicon) -->
+  <link rel="icon" type="image/png" href="hotel.jpg">
+</head>
+
+<body>
+
+  <!-- Contenedor principal del formulario y la imagen -->
+  <div class="principal">
+
+    <!-- Sección del formulario de registro -->
+    <div class="form">
+      <form id="registroForm">
+        <h2>Regístrese aquí</h2>
+
+        <!-- Campo para ingresar nombre -->
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" id="nombre" required><br><br>
+
+        <!-- Campo para ingresar correo electrónico -->
+        <label for="email">Correo electrónico:</label><br>
+        <input type="email" id="email" required><br><br>
+
+        <!-- Campo para ingresar contraseña -->
+        <label for="password">Contraseña:</label><br>
+        <input type="password" id="password" required><br><br>
+
+        <!-- Botón para enviar el formulario -->
+        <button type="submit">Registrarse</button>
+
+        <!-- Botón para regresar a la página de inicio de sesión -->
+        <button type="button" onclick="window.location.href='index.html'">Regresar</button>
+      </form>
+    </div>
+
+    <!-- Sección de imagen decorativa -->
+    <div class="imagen">
+      <img src="hotel.jpg" alt="Imagen de registro">
+    </div>
+  </div>
+
+  <!-- Script para manejar el envío del formulario -->
+  <script>
+    // Espera a que el usuario envíe el formulario
+    document.getElementById('registroForm').addEventListener('submit', async function (e) {
+      e.preventDefault(); // Evita recargar la página
+
+      // Obtiene los valores de los campos
+      const nombre = document.getElementById('nombre').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        // Enviar datos al servidor usando POST
+        const res = await fetch('/registro', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ nombre, email, password }) // Cuerpo de la solicitud en formato JSON
+        });
+
+        const msg = await res.text(); // Espera el mensaje del servidor
+        alert(msg); // Muestra el mensaje como alerta
+      } catch (error) {
+        // Si hay un error, muestra mensaje y lo registra en consola
+        alert('Error al registrar usuario');
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>

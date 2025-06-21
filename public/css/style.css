@@ -1,0 +1,124 @@
+/* === Reset y fuente general para toda la página === */
+body {
+    margin: 0; /* Elimina márgenes por defecto */
+    padding: 0; /* Elimina padding por defecto */
+    font-family: Arial, sans-serif; /* Fuente legible y común */
+    background-color: #EAEAEA; /* Color de fondo neutro claro */
+    display: flex; /* Centro todo el contenido */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    height: 100vh; /* Toma todo el alto de la ventana */
+}
+
+/* === Contenedor principal que divide la pantalla en 2 columnas === */
+.principal {
+    display: flex; /* Coloca los hijos (imagen y formulario) en línea */
+    width: 950px; /* Ancho fijo del contenedor */
+    height: 550px; /* Alto fijo del contenedor */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.15); /* Sombra para profundidad */
+    border-radius: 20px; /* Bordes redondeados */
+    overflow: hidden; /* Oculta lo que se salga del borde redondeado */
+}
+
+/* === Lado izquierdo: imagen del hotel o decoración === */
+.imagen {
+    flex: 1; /* Ocupa la mitad del espacio disponible */
+    background-color: #D4AF37; /* Dorado elegante */
+    display: flex;
+    justify-content: center; /* Centra la imagen horizontalmente */
+    align-items: center;     /* Centra la imagen verticalmente */
+}
+
+.imagen img {
+    max-width: 80%; /* Limita el ancho máximo de la imagen */
+    max-height: 80%; /* Limita la altura máxima */
+    border-radius: 40px; /* Bordes redondeados a la imagen */
+}
+
+/* === Lado derecho: formulario de inicio de sesión === */
+.form {
+    flex: 1; /* Ocupa la otra mitad */
+    background-color: #2C3E50; /* Azul oscuro elegante */
+    color: white; /* Texto claro para contraste */
+    display: flex;
+    flex-direction: column; /* Coloca los elementos en columna */
+    justify-content: center; /* Centrado vertical del contenido */
+    align-items: center;     /* Centrado horizontal del contenido */
+    padding: 40px;
+}
+
+/* Títulos del formulario */
+.form h2 {
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.form p {
+    font-size: 15px;
+    margin-bottom: 25px;
+}
+
+/* Etiquetas de los campos */
+.form label {
+    font-weight: bold;
+    align-self: flex-start; /* Alinea la etiqueta a la izquierda */
+    margin-bottom: 5px;
+}
+
+/* Campos de entrada de texto */
+.form input {
+    width: 100%; /* Ocupa todo el ancho disponible del formulario */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Contenedor del formulario para centrar internamente */
+.form form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* ✅ Centra el botón */
+}
+
+/* Botón principal del formulario */
+.form button {
+    background-color: #D4AF37; /* Color dorado elegante */
+    color: #2C3E50; /* Texto en color oscuro para contraste */
+    border: none;
+    padding: 10px 25px;
+    font-size: 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Suaviza el cambio al pasar el mouse */
+    width: 60%; /* Mismo ancho para mantener alineación */
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Efecto hover para el botón */
+.form button:hover {
+    background-color: #C19A2C; /* Dorado más oscuro al pasar el mouse */
+}
+
+/* Texto inferior (registro) */
+.form i {
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+/* Estilo para enlaces */
+.form a {
+    color: #B8E2F2; /* Azul claro elegante */
+    text-decoration: none;
+}
+
+.form a:hover {
+    text-decoration: underline; /* Subrayado al pasar el mouse */
+}
+
+.principal.reverse {
+    flex-direction: row-reverse;
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reservas</title>
+  <link rel="icon" type="image/png" href="hotel.jpg">
+  <link rel="stylesheet" href="css/tablas.css"> <!-- CSS compartido -->
+</head>
+<body>
+  <!-- Menú de navegación superior fijo -->
+  <nav class="menu">
+    <ul>
+      <li><a href="Principal.html">Menú principal</a></li>
+      <li><a href="habitaciones.html">Habitaciones</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+      <li><a href="empleados.html">Empleados</a></li>
+      <li><a href="index.html">Cerrar sesión</a></li>
+    </ul>
+  </nav>
+
+  <!-- Título principal -->
+  <h2>Lista de Reservas</h2>
+
+  <!-- Formulario para agregar nueva reserva -->
+  <div class="form-container">
+    <h3>Agregar Reserva</h3>
+    <form id="formReserva">
+      <!-- Campo texto para nombre cliente -->
+      <input type="text" id="cliente" placeholder="Nombre del cliente" required>
+
+      <!-- Campo texto para número habitación -->
+      <input type="text" id="habitacion" placeholder="Número de habitación" required>
+
+      <!-- Campos de texto para fechas en formato YYYY-MM-DD (sin calendario) -->
+      <input type="text" id="fechaEntrada" placeholder="Fecha de entrada (YYYY-MM-DD)" required>
+      <input type="text" id="fechaSalida" placeholder="Fecha de salida (YYYY-MM-DD)" required>
+
+      <!-- Botón para enviar formulario -->
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+
+  <!-- Tabla para mostrar reservas existentes -->
+  <div class="tabla-container">
+    <table id="tablaReservas">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Habitación</th>
+          <th>Entrada</th>
+          <th>Salida</th>
+          <th>Acciones</th> <!-- Para eliminar -->
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí se cargarán las reservas dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Script para manejar datos de reservas -->
+  <script>
+    // Función para cargar reservas desde servidor
+    async function cargarReservas() {
+      const res = await fetch('/api/reservas'); // Solicita reservas a API
+      const reservas = await res.json();        // Convierte respuesta a JSON
+      const tbody = document.querySelector('#tablaReservas tbody');
+
+      // Crea filas HTML para cada reserva y las inserta en la tabla
+      tbody.innerHTML = reservas.map(r => `
+        <tr>
+          <td>${r.cliente}</td>
+          <td>${r.habitacion}</td>
+          <td>${r.fechaEntrada.slice(0, 10)}</td> <!-- Solo fecha (sin hora) -->
+          <td>${r.fechaSalida.slice(0, 10)}</td>
+          <td>
+            <button class="btn-eliminar" onclick="eliminarReserva('${r._id}')">Eliminar</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Función para eliminar reserva por ID con confirmación
+    async function eliminarReserva(id) {
+      const confirmar = confirm("¿Estás seguro de eliminar esta reserva?");
+      if (!confirmar) return; // Si no confirma, sale
+      await fetch(`/api/reservas/${id}`, { method: 'DELETE' }); // Petición DELETE
+      cargarReservas(); // Actualiza la tabla
+    }
+
+    // Evento para manejar el envío del formulario de nueva reserva
+    document.getElementById('formReserva').addEventListener('submit', async (e) => {
+      e.preventDefault(); // Evita recarga automática del formulario
+
+      // Obtener valores de los inputs
+      const cliente = document.getElementById('cliente').value.trim();
+      const habitacion = document.getElementById('habitacion').value.trim();
+      const fechaEntrada = document.getElementById('fechaEntrada').value.trim();
+      const fechaSalida = document.getElementById('fechaSalida').value.trim();
+
+      // Aquí puedes agregar validación extra para las fechas (opcional)
+
+      // Enviar los datos al servidor con POST
+      await fetch('/api/reservas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cliente, habitacion, fechaEntrada, fechaSalida })
+      });
+
+      // Limpia el formulario para nueva entrada
+      document.getElementById('formReserva').reset();
+
+      // Refresca la tabla para mostrar la nueva reserva
+      cargarReservas();
+    });
+
+    // Carga reservas al abrir la página
+    cargarReservas();
+
+    // Hace disponible la función para eliminar reservas desde HTML
+    window.eliminarReserva = eliminarReserva;
+  </script>
+</body>
+</html>
