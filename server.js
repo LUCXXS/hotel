@@ -14,12 +14,12 @@ app.use(bodyParser.json());                   // Permite recibir JSON en las sol
 app.use(express.static('public'));            // Servir archivos estáticos desde la carpeta "public"
 
 // ================== CONEXIÓN A BASE DE DATOS ==================
-mongoose.connect('mongodb://localhost:27017/hotel', {
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log('Conexión exitosa a MongoDB'))
-.catch(err => console.error('Error al conectar a MongoDB:', err));
+.then(() => console.log('CONECTADO A MONGODB ATLAS'))
+.catch(err => console.error('ERROR DE CONEXIÓN:', err));
 
 // ================== DEFINICIÓN DE ESQUEMAS Y MODELOS ==================
 
