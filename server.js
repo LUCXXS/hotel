@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');             // Encriptación de contraseñas
 
 // ================== CONFIGURACIÓN BÁSICA ==================
 const app = express();                        // Crear instancia de la app Express
-const PORT = 3000;                            // Puerto en el que corre el servidor
+const PORT = process.env.PORT || 3000; // USA EL PUERTO QUE ASIGNE RAILWAY O LOCAL 3000
 
 app.use(cors());                              // Permite solicitudes CORS
 app.use(bodyParser.json());                   // Permite recibir JSON en las solicitudes
